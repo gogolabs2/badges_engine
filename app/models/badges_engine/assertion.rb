@@ -39,8 +39,10 @@ module BadgesEngine
 
     def bake
       uri = URI.parse(BadgesEngine::Configuration.baker_url)
-      uri += "?assertion=#{self.baking_callback_url}"
-      response = Net::HTTP.get_response(uri)
+      uri.query = URI.encode_www_form({assertion: self.baking_callback_url})
+      logger.info "URL: #{uri}"
+      response = Net::HTTP.get_response(URI.encode(uri))
+      logger.info "Response: #{response.inspect}"
 
       return response.body if response.kind_of?(Net::HTTPSuccess)
 
