@@ -39,17 +39,13 @@ module BadgesEngine
 
     def bake
       uri = URI.parse(BadgesEngine::Configuration.baker_url)
-      http = Net::HTTP.new(uri.host, uri.port)
-      path = "#{uri.path}?assertion=#{self.baking_callback_url}"
-      logger.debug("request: #{uri.host}#{path}")
-      response = http.get_response(path)
+      uri += "?assertion=#{self.baking_callback_url}"
+      response = Net::HTTP.get_response(uri)
+
+      return response.body if response.kind_of?(Net::HTTPSuccess)
 
       if !response || response.body.blank?
         raise "Baking badge failed: Response was blank:\n\t'#{response.inspect}'"
-      end
-
-      if response.kind_of?(Net::HTTPSuccess)
-        response.body
       else
         raise "Baking badge failed: Response was not a success:\n\t'#{response.inspect}'"
       end
