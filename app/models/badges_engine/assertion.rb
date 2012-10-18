@@ -41,19 +41,18 @@ module BadgesEngine
       uri = URI.parse(BadgesEngine::Configuration.baker_url)
       http = Net::HTTP.new(uri.host, uri.port)
       path = "#{uri.path}?assertion=#{self.baking_callback_url}"
-      headers = {'Content-Type'=>'application/json'}
       logger.debug("request: #{uri.host}#{path}")
-      response = http.get(path, headers)
-
-      unless response.kind_of?(Net::HTTPSuccess)
-        raise "Baking badge failed: Response was not a success:\n\t'#{response.inspect}'"
-      end
+      response = http.get(path)
 
       if !response || response.body.blank?
         raise "Baking badge failed: Response was blank:\n\t'#{response.inspect}'"
       end
 
-      response.body
+      if response.kind_of?(Net::HTTPSuccess)
+        response.body
+      else
+        raise "Baking badge failed: Response was not a success:\n\t'#{response.inspect}'"
+      end
     end
 
     def as_json(options={})
