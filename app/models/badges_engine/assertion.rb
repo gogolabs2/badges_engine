@@ -1,6 +1,6 @@
 require 'uri'
 require 'json'
-require 'net/http'
+require 'chunky_png'
 
 module BadgesEngine
   class Assertion < ActiveRecord::Base
