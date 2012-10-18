@@ -42,7 +42,7 @@ module BadgesEngine
       http = Net::HTTP.new(uri.host, uri.port)
       path = "#{uri.path}?assertion=#{self.baking_callback_url}"
       logger.debug("request: #{uri.host}#{path}")
-      response = http.get(path)
+      response = http.get_response(path)
 
       if !response || response.body.blank?
         raise "Baking badge failed: Response was blank:\n\t'#{response.inspect}'"
