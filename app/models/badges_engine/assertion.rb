@@ -38,19 +38,9 @@ module BadgesEngine
     end
 
     def bake
-      uri = URI.parse(BadgesEngine::Configuration.baker_url)
-      uri.query = URI.encode_www_form({assertion: self.baking_callback_url})
-      logger.info "URL: #{uri}"
-      response = Net::HTTP.get_response(URI.encode(uri))
-      logger.info "Response: #{response.inspect}"
-
-      return response.body if response.kind_of?(Net::HTTPSuccess)
-
-      if !response || response.body.blank?
-        raise "Baking badge failed: Response was blank:\n\t'#{response.inspect}'"
-      else
-        raise "Baking badge failed: Response was not a success:\n\t'#{response.inspect}'"
-      end
+      image = ChunkyPNG::Image.from_blob(open(badge.image).read)
+      image.metadata['openbadges'] = baking_callback_url
+      image.to_blob
     end
 
     def as_json(options={})
