@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "badges_engine/badges/new.html.haml" do
+describe "badges_engine/badges/new.html.haml", :type => :view do
   before(:each) do
     assign(:badge, stub_model(BadgesEngine::Badge,
       :version => "MyString",

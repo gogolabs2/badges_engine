@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "badges_engine/badges/show.html.haml" do
+describe "badges_engine/badges/show.html.haml", :type => :view do
   before(:each) do
     @badge = assign(:badge, stub_model(BadgesEngine::Badge,
       :version => "Version",
@@ -14,12 +14,12 @@ describe "badges_engine/badges/show.html.haml" do
   it "renders attributes in <p>" do
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/Name/)
+    expect(rendered).to match(/Name/)
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/Image/)
+    expect(rendered).to match(/Image/)
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/Description/)
+    expect(rendered).to match(/Description/)
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/Criteria/)
+    expect(rendered).to match(/Criteria/)
   end
 end
