@@ -18,7 +18,7 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe BadgesEngine::AssertionsController do
+describe BadgesEngine::AssertionsController, :type => :controller do
   
   # This should return the minimal set of attributes required to create a valid
   # Assertion. As you add validations to Assertion, be sure to
@@ -35,7 +35,7 @@ describe BadgesEngine::AssertionsController do
     it "assigns all assertions as @assertions" do
       assertion = BadgesEngine::Assertion.create! valid_attributes
       get :index, url_options
-      assigns(:assertions).should eq([assertion])
+      expect(assigns(:assertions)).to eq([assertion])
     end
   end
 
@@ -43,14 +43,14 @@ describe BadgesEngine::AssertionsController do
     it "assigns the requested assertion as @assertion" do
       assertion = BadgesEngine::Assertion.create! valid_attributes
       get :show, url_options(:id => assertion.id.to_s)
-      assigns(:assertion).should eq(assertion)
+      expect(assigns(:assertion)).to eq(assertion)
     end
   end
 
   describe "GET new" do
     it "assigns a new assertion as @assertion" do
       get :new, url_options
-      assigns(:assertion).should be_a_new(BadgesEngine::Assertion)
+      expect(assigns(:assertion)).to be_a_new(BadgesEngine::Assertion)
     end
   end
 
@@ -58,7 +58,7 @@ describe BadgesEngine::AssertionsController do
     it "assigns the requested assertion as @assertion" do
       assertion = BadgesEngine::Assertion.create! valid_attributes
       get :edit, url_options(:id => assertion.id.to_s)
-      assigns(:assertion).should eq(assertion)
+      expect(assigns(:assertion)).to eq(assertion)
     end
   end
 
@@ -72,29 +72,29 @@ describe BadgesEngine::AssertionsController do
 
       it "assigns a newly created assertion as @assertion" do
         post :create, url_options(:assertion => valid_attributes)
-        assigns(:assertion).should be_a(BadgesEngine::Assertion)
-        assigns(:assertion).should be_persisted
+        expect(assigns(:assertion)).to be_a(BadgesEngine::Assertion)
+        expect(assigns(:assertion)).to be_persisted
       end
 
       it "redirects to the created assertion" do
         post :create, url_options(:assertion => valid_attributes)
-        response.should redirect_to(BadgesEngine::Assertion.last)
+        expect(response).to redirect_to(BadgesEngine::Assertion.last)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved assertion as @assertion" do
         # Trigger the behavior that occurs when invalid params are submitted
-        BadgesEngine::Assertion.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(BadgesEngine::Assertion).to receive(:save).and_return(false)
         post :create, url_options(:assertion => {})
-        assigns(:assertion).should be_a_new(BadgesEngine::Assertion)
+        expect(assigns(:assertion)).to be_a_new(BadgesEngine::Assertion)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        BadgesEngine::Assertion.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(BadgesEngine::Assertion).to receive(:save).and_return(false)
         post :create, url_options(:assertion => {})
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
     end
   end
@@ -107,20 +107,20 @@ describe BadgesEngine::AssertionsController do
         # specifies that the Assertion created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        BadgesEngine::Assertion.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+        expect_any_instance_of(BadgesEngine::Assertion).to receive(:update_attributes).with({'these' => 'params'})
         put :update, url_options(:id => assertion.id, :assertion => {'these' => 'params'})
       end
 
       it "assigns the requested assertion as @assertion" do
         assertion = BadgesEngine::Assertion.create! valid_attributes
         put :update, url_options(:id => assertion.id, :assertion => valid_attributes)
-        assigns(:assertion).should eq(assertion)
+        expect(assigns(:assertion)).to eq(assertion)
       end
 
       it "redirects to the assertion" do
         assertion = BadgesEngine::Assertion.create! valid_attributes
         put :update, url_options(:id => assertion.id, :assertion => valid_attributes)
-        response.should redirect_to(assertion)
+        expect(response).to redirect_to(assertion)
       end
     end
 
@@ -128,17 +128,17 @@ describe BadgesEngine::AssertionsController do
       it "assigns the assertion as @assertion" do
         assertion = BadgesEngine::Assertion.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        BadgesEngine::Assertion.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(BadgesEngine::Assertion).to receive(:save).and_return(false)
         put :update, url_options(:id => assertion.id.to_s, :assertion => {})
-        assigns(:assertion).should eq(assertion)
+        expect(assigns(:assertion)).to eq(assertion)
       end
 
       it "re-renders the 'edit' template" do
         assertion = BadgesEngine::Assertion.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        BadgesEngine::Assertion.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(BadgesEngine::Assertion).to receive(:save).and_return(false)
         put :update, url_options(:id => assertion.id.to_s, :assertion => {})
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
   end
@@ -154,7 +154,7 @@ describe BadgesEngine::AssertionsController do
     it "redirects to the assertions list" do
       assertion = BadgesEngine::Assertion.create! valid_attributes
       delete :destroy, url_options(:id => assertion.id.to_s)
-      response.should redirect_to(assertions_path)
+      expect(response).to redirect_to(assertions_path)
     end
   end
 
