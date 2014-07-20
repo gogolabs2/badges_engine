@@ -10,6 +10,6 @@ require 'spec_helper'
 #     end
 #   end
 # end
-describe BadgesEngine::BadgesHelper do
+describe BadgesEngine::BadgesHelper, :type => :helper do
   # pending "add some examples to (or delete) #{__FILE__}"
 end

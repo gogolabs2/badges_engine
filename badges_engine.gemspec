@@ -7,8 +7,8 @@ require "badges_engine/version"
 Gem::Specification.new do |s|
   s.name        = "badges_engine"
   s.version     = BadgesEngine::VERSION
-  s.authors     = ["Andrew Kuklewicz"]
-  s.email       = ["andrew@prx.org"]
+  s.authors     = ["Andrew Kuklewicz, Richard Newman"]
+  s.email       = ["andrew@prx.org, rnewman@rezzly.com"]
   s.homepage    = ""
   s.summary     = "Rails 3.2 Engine for Mozilla Open Badges Issuers"
   s.description = "Rails 3.2 Engine for Mozilla Open Badges Issuers"
@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency 'rails', '~> 3.2.0'
+  s.add_dependency 'rails', '~> 3.2'
   s.add_dependency 'jquery-rails'
   s.add_dependency 'haml'
   s.add_dependency 'haml-rails'

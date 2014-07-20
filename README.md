@@ -13,7 +13,7 @@ Install
 -------
 Start by adding the gem to your Gemfile, then do the usual routine, and install the bundle:
 
-    gem 'badges_engine', git: 'git://github.com/alfielapeter/badges_engine.git'
+    gem 'badges_engine', git: 'git://github.com/gogolabs2/badges_engine.git'
 
 Next there are migrations to copy over:
 
@@ -34,6 +34,7 @@ This sets up the initial values you need for the issuer, and specifies the User 
 Author(s)
 -----------
 Andrew Kuklewicz - https://github.com/kookster
+Richard Newman - https://github.com/rdnewman
 
 License
 -------
