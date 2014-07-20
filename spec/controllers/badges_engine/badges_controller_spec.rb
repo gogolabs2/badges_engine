@@ -18,7 +18,7 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe BadgesEngine::BadgesController do
+describe BadgesEngine::BadgesController, :type => :controller do
 
   # This should return the minimal set of attributes required to create a valid
   # Badge. As you add validations to Badge, be sure to
@@ -35,7 +35,7 @@ describe BadgesEngine::BadgesController do
     it "assigns all badges as @badges" do
       badge = BadgesEngine::Badge.create! valid_attributes
       get :index, url_options
-      assigns(:badges).should eq([badge])
+      expect(assigns(:badges)).to eq([badge])
     end
   end
 
@@ -43,14 +43,14 @@ describe BadgesEngine::BadgesController do
     it "assigns the requested badge as @badge" do
       badge = BadgesEngine::Badge.create! valid_attributes
       get :show, url_options(:id => badge.id.to_s)
-      assigns(:badge).should eq(badge)
+      expect(assigns(:badge)).to eq(badge)
     end
   end
 
   describe "GET new" do
     it "assigns a new badge as @badge" do
       get :new, url_options
-      assigns(:badge).should be_a_new(BadgesEngine::Badge)
+      expect(assigns(:badge)).to be_a_new(BadgesEngine::Badge)
     end
   end
 
@@ -58,7 +58,7 @@ describe BadgesEngine::BadgesController do
     it "assigns the requested badge as @badge" do
       badge = BadgesEngine::Badge.create! valid_attributes
       get :edit, url_options(:id => badge.id.to_s)
-      assigns(:badge).should eq(badge)
+      expect(assigns(:badge)).to eq(badge)
     end
   end
 
@@ -72,29 +72,29 @@ describe BadgesEngine::BadgesController do
 
       it "assigns a newly created badge as @badge" do
         post :create, url_options(:badge => valid_attributes)
-        assigns(:badge).should be_a(BadgesEngine::Badge)
-        assigns(:badge).should be_persisted
+        expect(assigns(:badge)).to be_a(BadgesEngine::Badge)
+        expect(assigns(:badge)).to be_persisted
       end
 
       it "redirects to the created badge" do
         post :create, url_options(:badge => valid_attributes)
-        response.should redirect_to(BadgesEngine::Badge.last)
+        expect(response).to redirect_to(BadgesEngine::Badge.last)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved badge as @badge" do
         # Trigger the behavior that occurs when invalid params are submitted
-        BadgesEngine::Badge.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(BadgesEngine::Badge).to receive(:save).and_return(false)
         post :create, url_options(:badge => {})
-        assigns(:badge).should be_a_new(BadgesEngine::Badge)
+        expect(assigns(:badge)).to be_a_new(BadgesEngine::Badge)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        BadgesEngine::Badge.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(BadgesEngine::Badge).to receive(:save).and_return(false)
         post :create, url_options(:badge => {})
-        response.should render_template("new")
+        expect(response).to render_template("new")
       end
     end
   end
@@ -107,20 +107,20 @@ describe BadgesEngine::BadgesController do
         # specifies that the BadgesEngine::Badge created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        BadgesEngine::Badge.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+        expect_any_instance_of(BadgesEngine::Badge).to receive(:update_attributes).with({'these' => 'params'})
         put :update, url_options(:id => badge.id, :badge => {'these' => 'params'})
       end
 
       it "assigns the requested badge as @badge" do
         badge = BadgesEngine::Badge.create! valid_attributes
         put :update, url_options(:id => badge.id, :badge => valid_attributes)
-        assigns(:badge).should eq(badge)
+        expect(assigns(:badge)).to eq(badge)
       end
 
       it "redirects to the badge" do
         badge = BadgesEngine::Badge.create! valid_attributes
         put :update, url_options(:id => badge.id, :badge => valid_attributes)
-        response.should redirect_to(badge)
+        expect(response).to redirect_to(badge)
       end
     end
 
@@ -128,17 +128,17 @@ describe BadgesEngine::BadgesController do
       it "assigns the badge as @badge" do
         badge = BadgesEngine::Badge.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        BadgesEngine::Badge.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(BadgesEngine::Badge).to receive(:save).and_return(false)
         put :update, url_options(:id => badge.id.to_s, :badge => {})
-        assigns(:badge).should eq(badge)
+        expect(assigns(:badge)).to eq(badge)
       end
 
       it "re-renders the 'edit' template" do
         badge = BadgesEngine::Badge.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
-        BadgesEngine::Badge.any_instance.stub(:save).and_return(false)
+        allow_any_instance_of(BadgesEngine::Badge).to receive(:save).and_return(false)
         put :update, url_options(:id => badge.id.to_s, :badge => {})
-        response.should render_template("edit")
+        expect(response).to render_template("edit")
       end
     end
   end
@@ -154,7 +154,7 @@ describe BadgesEngine::BadgesController do
     it "redirects to the badges list" do
       badge = BadgesEngine::Badge.create! valid_attributes
       delete :destroy, url_options(:id => badge.id.to_s)
-      response.should redirect_to(badges_path)
+      expect(response).to redirect_to(badges_path)
     end
   end
 
